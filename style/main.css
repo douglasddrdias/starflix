@@ -1,0 +1,146 @@
+/* variaveis do css */
+:root{
+    --vermelho: #E50914;
+    --preto: #141414;
+}
+@font-face {
+    font-family: StarWars;
+    src: url(../fonts/sf-distant-galaxy-font/SfDistantGalaxyItalic-WV3Y.ttf)
+  }
+  @font-face {
+    font-family: StarWarsAlt;
+    src: url(../fonts/sf-distant-galaxy-font/SfDistantGalaxy-0l3d.ttf)
+  }  
+/* resetando o css dos navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* elementos base */
+body {
+    background: var(--preto);
+}
+header .meu-container {
+    display: flex;
+    /* valor padrão */
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+header .logo{
+    margin-left: 5px;
+    color: var(--vermelho);
+    font-family: StarWars, StarWarsAlt, 'Arial Black', Times, serif;
+    font-size: 40px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #AAA;
+    margin-right: 10px;
+}
+
+header nav a:hover {
+    color: #fff;
+}
+
+/* filme principal */
+.filme-principal {
+    font-size: 16px;
+    background-size: cover;
+    /* background-size: auto; */
+    background-repeat:no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.filme-principal .descricao {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.filme-principal .titulo {
+    margin-top: 15%;
+    font-size: 40px;
+    font-family: StarWars, StarWarsAlt, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.botao{
+    /* rgba contém um efeito */
+    background-color: rgba(0, 0, 0, .50);
+    border: none;
+    color: white;
+    /* para cima e para baixo é o primeiro o segundo é direta e esquerda */
+    padding: 15px 30px;
+    margin-right: 15px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .3s ease all;
+}
+
+.botao:hover {
+    background-color: white;
+    color: black;
+}
+.botao i{
+    margin-right: 8px;
+}
+
+.meu-container {
+    margin-left: 30px;
+    font-family: StarWars, StarWarsAlt, 'Arial', Times, serif;
+    color: white;    
+}
+
+.filme-principal .meu-container {
+    width:  70%;
+}
+
+.box-filme {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.carrosel-filmes {
+    margin-top: 5px;
+}
+
+.modal.centered.in .aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .centered .modal-dialog {
+    align-self: center;
+  }
+
+.modal-dialog {
+    max-width: 800px;
+    margin: 30px auto;
+  }
+
+.modal-body {
+  position:relative;
+  padding:0px;
+}
+.btn-close {
+  position:absolute;
+  right:-30px;
+  top:0;
+  background-color: rgba(136, 136, 136, 0.486);
+}  
+
+.modal-content{
+    background-color: unset;
+}
+
+.botao-invisivel{
+    display: none;
+}
