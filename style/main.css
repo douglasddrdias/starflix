@@ -136,17 +136,28 @@ header nav a:hover {
   position:relative;
   padding:0px;
 }
-.btn-close {
+.btn-close-youtube {
   position:absolute;
   right:-30px;
   top:0;
   background-color: rgba(136, 136, 136, 0.486);
-}  
+} 
+.btn-close-mais-informacoes {
+    background-color: rgba(136, 136, 136, 0.486);
+}
 
-.modal-content{
+
+.modal-content-youtube{
     background-color: unset;
 }
 
 .botao-invisivel{
     display: none;
+}
+
+.modal-mais-informacoes {
+    font-family: StarWars, StarWarsAlt, 'Arial Black', Times, serif;
+    color: #fff;    
+    background: var(--preto);
+    padding-bottom: 50px;
 }

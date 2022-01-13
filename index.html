@@ -35,9 +35,12 @@
                 <h3 id="titulo"></h3>
                 <p class="descricao" id="descricao"></p>
                 <div class="botoes">
-                    <button role="button" id="assistir" class="botao botao-invisivel" type="button" data-bs-toggle="modal" data-bs-target="#myModal" ><i
-                            class="fas fa-play"></i>ASSISTIR AGORA</button>
-                    <button role="button" id="mais-informacoes" class="botao botao-invisivel" ><i class="fas fa-info-circle" ></i>MAIS INFORMAÇÕES</button>
+                    <button role="button" id="assistir" class="botao botao-invisivel" type="button"
+                        data-bs-toggle="modal" data-bs-target="#myModal"><i class="fas fa-play"></i>ASSISTIR
+                        AGORA</button>
+                    <button role="button" id="mais-informacoes" class="botao botao-invisivel" data-bs-toggle="modal"
+                        data-bs-target="#maisInformaocesModal"><i class="fas fa-info-circle"></i>MAIS
+                        INFORMAÇÕES</button>
                 </div>
             </div>
         </div>
@@ -50,21 +53,22 @@
             <div class="item"><img class="box-filme" src="img/star-wars-nova-esperanca.jpg"></div>
             <div class="item"><img class="box-filme" src="img/star-wars-imperio-contra-ataca.jpg"></div>
             <div class="item"><img class="box-filme" src="img/star-wars-retorno-jedi.jpg"></div>
-            <div class="item"><img class="box-filme" src="img/star-wars-despertar-da-forca.jpg"></div>            
-            <div class="item"><img class="box-filme" src="img/star-wars-ultimos-jedi.jpg"></div>            
+            <div class="item"><img class="box-filme" src="img/star-wars-despertar-da-forca.jpg"></div>
+            <div class="item"><img class="box-filme" src="img/star-wars-ultimos-jedi.jpg"></div>
             <div class="item"><img class="box-filme" src="img/star-wars-a-ascensao-skywalker.jpg"></div>
-            <div class="item"><img class="box-filme" src="img/star-wars-rogue-one.jpg"></div>            
+            <div class="item"><img class="box-filme" src="img/star-wars-rogue-one.jpg"></div>
             <div class="item"><img class="box-filme" src="img/star-wars-han-solo.jpg"></div>
 
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modal youtube-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content-youtube">
                 <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></span>
+                    <button type="button" class="btn-close btn-close-youtube" data-bs-dismiss="modal"
+                        aria-label="Close"></span>
                     </button>
                     <div class="ratio ratio-16x9">
                         <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always"
@@ -77,6 +81,39 @@
             </div>
         </div>
     </div>
+    <!-- Modal mais informações-->
+    <div class="modal fade" id="maisInformaocesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-5 shadow modal-mais-informacoes" id="corpoModalMaisInformacoes">
+                <div class="modal-header p-5 pb-4 border-bottom-0">
+                    <h2 class="fw-bold mb-0" id="mais-informacoes-titulo"></h2>
+                    <button type="button" class="btn-close btn-close-mais-informacoes" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <label class="col-lg-3">Titulo original:</label>
+                            <label id="tituloOriginal" class="col-lg-9"></label>
+                        </div>
+                        <div class="row">
+                            <label class="col-lg-3 mais-informacoes-lbl-titulo">Data lançamento:</label>
+                            <label id="dataLancamento" class="col-lg-9"></label>
+                        </div>
+                        <div class="row">
+                            <label class="col-lg-3 mais-informacoes-lbl-titulo">Nota do filme:</label>
+                            <label id="notaFilme" class="col-lg-9"></label>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <h5>This product uses the TMDB API but is not endorsed or certified by TMDB.</h5>
+    </footer>
     <script src="https://kit.fontawesome.com/22d71e8cbe.js" crossorigin="anonymous"></script>
     <script src="js/owl/jquery.min.js"></script>
     <script src="js/bootstrap/bootstrap.min.js"></script>
