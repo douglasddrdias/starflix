@@ -86,6 +86,12 @@ header nav a:hover {
 .botao:hover {
     background-color: white;
     color: black;
+    background-image: linear-gradient(to right,
+    transparent,
+    aqua 25%,
+    white 50%,
+    aqua 75%,
+    transparent)
 }
 .botao i{
     margin-right: 8px;
