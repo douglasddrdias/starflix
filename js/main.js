@@ -47,6 +47,7 @@ const URL_BASE_API = 'https://api.themoviedb.org/3/';
 const URL_FILME = 'movie/'
 const LINGUAGEM_PT_BR = '&language=pt-br';
 const URL_BACKGROUND = 'https://www.themoviedb.org/t/p/original';
+const URL_BUSCA_IMAGENS = '/images'
 let objetoAtual;
 let arrayNomeImg;
 let nomeImg;
@@ -154,15 +155,42 @@ function carregarEventosAndInformacoesPadrao() {
     }
 }
 
+// Altera as informações do modal de mais informações
 const recuperarMaisInformacoesFilme = async () => {
     objetoAtualApi = await recuperarMaisInformacoesFilmeNaApi(objetoAtual.idFilmeSwapi);
     adicionarMensagemAoLabel(lblTituloMaisInformacoes, objetoAtualApi.title);
     adicionarMensagemAoLabel(lblTituloOriginal, objetoAtualApi.original_title);
     adicionarMensagemAoLabel(lblDataLancamento, formatarData(objetoAtualApi.release_date));
     adicionarMensagemAoLabel(lblNotaFilme, objetoAtualApi.vote_average);
-    alterarBackground(divCorpoMaisInformacoes, URL_BACKGROUND + objetoAtualApi.backdrop_path);
+    await alterarBackgroundMaisInformacoes()
 }
 
+const alterarBackgroundMaisInformacoes = async () => {
+    let imagemApi = await recuperarAndSelecionarAleatoriamenteImagemBackgroud();
+    alterarBackground(divCorpoMaisInformacoes, URL_BACKGROUND + imagemApi);
+}
+// recupera uma imagem para background 
+const recuperarAndSelecionarAleatoriamenteImagemBackgroud= async () =>{
+    let imagensApi = await recuperarImagensFilmeNaApi(objetoAtual.idFilmeSwapi);
+    if (!imagensApi || !imagensApi.backdrops || imagensApi.backdrops.length <= 0){
+        return objetoAtualApi.backdrop_path;
+    }
+    let numeroAleatorio = getNumeroAleatorio(imagensApi.backdrops.length -1);
+    return imagensApi.backdrops[numeroAleatorio].file_path;
+}
+
+// gera um número inteiro aleatorio até o valor máximo
+function getNumeroAleatorio(max) {
+    return Math.floor(Math.random() * max + 1)
+}
+
+// recupera as imagens relacionadas ao filme selecionado
+const recuperarImagensFilmeNaApi = async (id) =>{
+    let resposta = await realizarAcessoApi(URL_BASE_API+URL_FILME+id+URL_BUSCA_IMAGENS+'?'+CHAVE);
+    return resposta;
+}
+
+// Formata a data para o formato pt-br
 const formatarData = (dataParaFormatar) => {
     if (!dataParaFormatar){
         return 'Data não informada'
@@ -174,9 +202,6 @@ const formatarData = (dataParaFormatar) => {
 // realiza o acesso ao api e recupera a url da imagem
 const recuperarMaisInformacoesFilmeNaApi = async (id) => {
     let resposta = await realizarAcessoApi(URL_BASE_API+URL_FILME+id+'?'+CHAVE+LINGUAGEM_PT_BR);
-    if (!resposta){
-        console.log("Erro ao recuperar os dados da API!");
-    }
     return resposta;
 }
 
@@ -189,6 +214,9 @@ const realizarAcessoApi = async (url) => {
     } catch (e) {
         console.log(e);
     }
+    if (!resposta){
+        console.log("Erro ao recuperar os dados da API!");
+    }    
     return resposta;
 }
   
