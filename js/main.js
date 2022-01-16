@@ -26,6 +26,7 @@ let objetoAtualApi;
 const URL_VIDEO_YOUTUBE = 'https://www.youtube.com/embed/';
 let idVideoYoutube;
 const divListaFilmes = document.getElementById('listaFilmes');
+const divListaAtores = document.getElementById('listaAtores');
 const arrayFilmes = [new Filme('jVrf_bKTjo4', '11'),
 new Filme('bD7bpG-zDJQ', '1893'),
 new Filme('-di3XYRxyHY', '181808'),
@@ -75,19 +76,21 @@ async function carregarEventosAndInformacoesPadrao() {
     btnMaisInformacoes.addEventListener('click', recuperarMaisInformacoesFilme);
     for (filme of arrayFilmes) {
         let objetoApi = await recuperarMaisInformacoesFilmeNaApi(filme.idFilmeSwapi);
-        carregarItemFilmesOwl(objetoApi);
+        carregarItemFilmesOwlFilme(objetoApi, divListaFilmes);
     }
     carregarOwlCarousel('#listaFilmes');
+    carregarOwlCarousel('#listaAtores');
 }
 
-function carregarItemFilmesOwl(objetoApi) {
+// Carrega os itens carousel de filme na tela
+function carregarItemFilmesOwlFilme(objetoApi, div) {
     let divItem = criarDivItemOwl();
     let imagem = criarImgItemOwl(URL_POSTER + objetoApi.poster_path);
     imagem.addEventListener('click', function () {
         alterarFilmeDestaque(objetoApi);
     })
     divItem.appendChild(imagem);
-    divListaFilmes.appendChild(divItem);
+    div.appendChild(divItem);
 }
 
 // Altera as informações do modal de mais informações
@@ -97,6 +100,32 @@ async function recuperarMaisInformacoesFilme() {
     adicionarMensagemAoLabel(lblDataLancamento, formatarData(objetoAtualApi.release_date));
     adicionarMensagemAoLabel(lblNotaFilme, objetoAtualApi.vote_average);
     await alterarBackgroundComImagemApi(divCorpoMaisInformacoes);
+    let mapEquipe = await recuperarAtoresPrincipaisAndDiretor(objetoAtualApi);
+    let arrayAtores = mapEquipe.get('ator');
+    limparFilhosElemento(divListaAtores);
+    for (ator of arrayAtores) {
+        carregarItemFilmesOwl(ator, divListaAtores);
+    }
+
+    // recarrega o owl carousel
+    var owl = $("#listaAtores"); 
+    owl.removeData("owl.carousel");
+    carregarOwlCarousel('#listaAtores');
+
+}
+
+
+
+// Carrega os itens carousel de filme na tela
+function carregarItemFilmesOwl(ator, div) {
+    if (!ator.caminhoImagem) {
+        return false;
+    } else {
+        let divItem = criarDivItemOwl();
+        let imagem = criarImgItemOwl(URL_FOTO + ator.caminhoImagem);
+        divItem.appendChild(imagem);
+        div.appendChild(divItem);
+    }
 }
 
 // altera o background do filme com imagem da api
@@ -114,7 +143,7 @@ async function assistirTrailerYoutube() {
         idVideoYoutube = video.key;
         console.log('id no assistir trailer ', idVideoYoutube);
     }
-    
+
 }
 
 // recupera o idVideoYoutube para o id passado 

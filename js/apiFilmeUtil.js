@@ -7,6 +7,19 @@ const URL_BACKGROUND = URL_BASE_IMAGEM + 'original';
 const URL_BUSCA_IMAGENS = '/images'
 const URL_POSTER = URL_BASE_IMAGEM + 'w600_and_h900_bestv2';
 const URL_BUSCA_VIDEOS = '/videos';
+const URL_BUSCA_PARTICIPANTES_FILME = '/credits';
+const URL_FOTO = URL_BASE_IMAGEM + 'w185';
+
+class Equipe {
+    constructor(id, nome, nomeOriginal, caminhoImagem, personagem){
+        this.id =id;
+        this.nome = nome;
+        this.nomeOriginal = nomeOriginal;
+        this.caminhoImagem = caminhoImagem;
+        this.personagem = personagem;
+    }
+
+}
 
 // recupera as imagens relacionadas ao filme selecionado
 async function recuperarImagensFilmeNaApi (id) {
@@ -73,4 +86,39 @@ async function recuperarPrimeiroVideoYoutube(videos){
 async function recuperarVideosNaApi(id, linguagem = ''){
     let resposta = await realizarAcessoApi(URL_BASE_API+URL_FILME+id+URL_BUSCA_VIDEOS+'?'+CHAVE + linguagem);
     return resposta;    
+}
+
+// recupera a equipe participante do filme
+async function recuperarEquipeFilmeApi(id){
+    let resposta = await realizarAcessoApi(URL_BASE_API+URL_FILME+id+URL_BUSCA_PARTICIPANTES_FILME+"?"+CHAVE);
+    return resposta;
+}
+
+
+//constructor(id, nome, nomeOriginal, caminhoImagem, personagem)
+// recupera os 10 primeiros atores e os diretores do filme
+async function recuperarAtoresPrincipaisAndDiretor(objetoApi){
+    let mapEquipe = new Map();
+    let equipe = await recuperarEquipeFilmeApi(objetoApi.id);
+    if (!equipe || !equipe.cast ||equipe.cast.length <=0){
+        console.log('Erro ao recuperar equipe do filme ', objetoApi);
+    }
+    let funcao = 'ator';
+    let objetoAtor;
+    let atores = []
+    for (let i = 0; i <= equipe.cast.length && i < 10; i++){
+        objetoAtor = equipe.cast[i];
+        atores.push(new Equipe(objetoAtor.id, objetoAtor.name, objetoAtor.original_name, objetoAtor.profile_path, objetoAtor.character));
+    }
+    mapEquipe.set(funcao, atores);
+    if (!equipe.crew || equipe.crew.length <= 0){
+        return mapEquipe;
+    }
+    for (membro of equipe.crew){
+        if (membro.job == 'Director'){
+            let diretor = new Equipe(membro.id, membro.name, membro.original_name, membro.profile_path, '');
+            mapEquipe.set('diretor', [diretor])
+        }
+    }
+    return mapEquipe;
 }
