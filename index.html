@@ -23,18 +23,18 @@
             <h2 class="logo" id="logo">STARFLIX</h2>
             <nav>
                 <a href="#filmePrincipal">Início</a>
-                <a href="#">Séries</a>
+                <a href="#containerSerie">Séries</a>
                 <a href="#filmePrincipal">Filmes</a>
-                <a href="#" onclick="limparItensFilmeDestaque()">Documentários</a>
+                <a href="#" >Documentários</a>
             </nav>
         </div>
     </header>
     <main>
         <section id="filmePrincipal">
-            <div class="filme-principal">
+            <div class="filme-principal" id="divFilmePrincipal">
                 <div class="meu-container margem-direita" id="containerFilme">
                 </div>
-                <div class="botoes margem-direita">
+                <div class="botoes margem-direita botton-0">
                     <button role="button" id="assistir" class="botao botao-invisivel" type="button"
                         data-bs-toggle="modal" data-bs-target="#myModal"><i class="fas fa-play"></i>ASSISTIR
                         AGORA</button>
@@ -44,11 +44,38 @@
                 </div>                
             </div>
         </section>
-    </main>
-    <div class="carrosel-filmes">
-        <div class="owl-carousel owl-theme" id="listaFilmes">
+        <div class="carrosel-filmes">
+            <div class="text-center titulo-carousel">
+                <label>Filmes</label>
+            </div>
+            <div class="owl-carousel owl-theme" id="listaFilmes">
+            </div>
         </div>
-    </div>
+    </main>
+    <main>
+        <section id="seriePrincipal">
+            <div class="filme-principal" id="divSeriePrincipal">
+                <div class="meu-container margem-direita" id="containerSerie">
+                </div>
+                <div class="botoes margem-direita botton-0">
+                    <button role="button" id="assistirSerie" class="botao botao-invisivel" type="button"
+                        data-bs-toggle="modal" data-bs-target="#myModal"><i class="fas fa-play"></i>ASSISTIR
+                        AGORA</button>
+                    <button role="button" id="mais-informacoesSerie" class="botao botao-invisivel" data-bs-toggle="modal"
+                        data-bs-target="#maisInformaocesModal"><i class="fas fa-info-circle"></i>MAIS
+                        INFORMAÇÕES</button>
+                </div>                
+            </div>
+        </section>
+        <div class="carrosel-filmes">
+            <div class="text-center titulo-carousel">
+                <label>Séries</label>
+            </div>            
+            <div class="owl-carousel owl-theme" id="listaSerie">
+            </div>
+        </div>
+    </main>    
+
 
 
     <!-- Modal youtube-->
@@ -60,6 +87,9 @@
                     <button type="button" class="btn-close btn-close-youtube" data-bs-dismiss="modal"
                         aria-label="Close"></span>
                     </button>
+                    <div  id="corpoModalVideo">
+
+                    </div>
                     <div class="ratio ratio-16x9">
                         <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always"
                             allow="autoplay"></iframe>
@@ -81,31 +111,6 @@
 
                 <div class="modal-body">
                     <div class="container" id="containerMaisInformacoes">
-                        <div class="row">
-                            <label class="col-lg-3">Titulo original:</label>
-                            <label id="tituloOriginal" class="col-lg-9"></label>
-                        </div>
-                        <div class="row">
-                            <label class="col-lg-3 ">Data lançamento:</label>
-                            <label id="dataLancamento" class="col-lg-9"></label>
-                        </div>
-                        <div class="row">
-                            <label class="col-lg-3 ">Nota do filme:</label>
-                            <label id="notaFilme" class="col-lg-9"></label>
-                        </div>
-                        <div class="row">
-                            <label class="col-lg-3 ">Diretor:</label>
-                            <label class="col-lg-9 " id="diretorFilme"></label>
-                        </div>                        
-                        <div class="row">
-                            <label class="col-lg-12 text-center">Elenco principal</label>
-                        </div>
-                        <div class="row">
-                            <div class="carrosel-filmes">
-                                <div class="owl-carousel owl-theme" id="listaAtores">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -120,7 +125,9 @@
     <script src="js/owl/owl.carousel.min.js"></script>
     <script src="js/utilTela.js"></script>
     <script src="js/apiFilmeUtil.js"></script>
+    <script src="js/apiSerieUtil.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/serie.js"></script>
 </body>
 
 </html>

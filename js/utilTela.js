@@ -1,6 +1,9 @@
 const divContainerMaisInformacoes = document.getElementById('containerMaisInformacoes');
 const lblTituloMaisInformacoes = document.getElementById('mais-informacoes-titulo');
 const divCorpoMaisInformacoes = document.getElementById('corpoModalMaisInformacoes');
+const URL_VIDEO_YOUTUBE = 'https://www.youtube.com/embed/';
+const divCorpoModalVideo = document.getElementById('corpoModalVideo');
+let idVideoYoutube;
 
 // Adiciona um texto na tela
 function adicionarMensagemAoLabel(lblResultado, text) {
@@ -174,3 +177,17 @@ function carregarItemFilmesOwlAtor(ator, div) {
         div.appendChild(divItem);
     }
 }
+
+$(document).ready(function () {
+    // when the modal is opened autoplay it  
+    $('#myModal').on('shown.bs.modal', function (e) {
+        // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+        $("#video").attr('src', URL_VIDEO_YOUTUBE + idVideoYoutube + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
+    })
+    // stop playing the youtube video when I close the modal
+    $('#myModal').on('hide.bs.modal', function (e) {
+        // a poor man's stop video
+        $("#video").attr('src', '');
+    })
+    // document ready  
+});

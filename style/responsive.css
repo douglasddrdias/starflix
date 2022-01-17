@@ -27,9 +27,10 @@
 @media screen and (min-width: 1000px){
     .descricao {
         width: 50%;
+        margin-bottom: 10px;
     }
     .filme-principal-responsivo{
-        min-height: 500px;
+        min-height: 600px;
         padding-bottom: 50px;
     }     
 }

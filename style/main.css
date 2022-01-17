@@ -81,6 +81,7 @@ header nav a:hover {
     font-size: 12px;
     cursor: pointer;
     transition: .3s ease all;
+    margin-bottom: 3px;
 }
 
 .botao:hover {
@@ -175,4 +176,12 @@ header nav a:hover {
 
 .margin-em-cima {
     margin-top: 20px;
+}
+
+.titulo-carousel {
+    font-family: StarWars, StarWarsAlt, 'Arial Black', Times, serif;
+    color: #fff;    
+    background: var(--preto);
+    font-size: 26px;
+    padding-bottom: 10px;    
 }

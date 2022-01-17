@@ -1,4 +1,3 @@
-
 class Filme {
     constructor(urlTrailerYoutube, idFilmeSwapi) {
         this.urlTrailerYoutube = urlTrailerYoutube;
@@ -8,16 +7,9 @@ class Filme {
 
 const btnMaisInformacoes = document.getElementById('mais-informacoes');
 const btnAssistir = document.getElementById('assistir');
-const imagens = document.querySelectorAll('img.box-filme');
-const divFilmePrincipal = document.querySelector('div.filme-principal');
-const frameVideo = document.getElementById('video');
+const divFilmePrincipal = document.getElementById('divFilmePrincipal');
 const divCotainerFilme = document.getElementById('containerFilme');
-let objetoAtual;
-let arrayNomeImg;
-let nomeImg;
 let objetoAtualApi;
-const URL_VIDEO_YOUTUBE = 'https://www.youtube.com/embed/';
-let idVideoYoutube;
 const divListaFilmes = document.getElementById('listaFilmes');
 const sectionFilme = document.getElementById('filmePrincipal');
 const arrayFilmes = [new Filme('jVrf_bKTjo4', '11'),
@@ -37,6 +29,7 @@ new Filme('9oISQcXuki0', '330459')
 // altera o filme selecionado
 async function alterarFilmeDestaque(objetoApi) {
     if (!arrastouItem) {
+        limparItensSerieDestaque();
         objetoAtualApi = objetoApi;
         await alterarBackgroundComImagemApi(divFilmePrincipal);
         divFilmePrincipal.classList.add('filme-principal-responsivo');
@@ -135,12 +128,12 @@ async function alterarBackgroundComImagemApi(div) {
 
 // recupera o idVideoYoutube caso não seja encontrado nenhum é recuperado do array
 async function assistirTrailerYoutube() {
+    limparFilhosElemento(CORPO_MODAL_VIDEO);
     video = await recuperarVideoYoutube(objetoAtualApi);
     if (!video || !video.key) {
         idVideoYoutube = recuperarIdYoutubeArray(objetoAtualApi.id);
     } else {
         idVideoYoutube = video.key;
-        console.log('id no assistir trailer ', idVideoYoutube);
     }
 
 }
@@ -153,20 +146,5 @@ function recuperarIdYoutubeArray(id) {
         }
     }
 }
-
-$(document).ready(function () {
-    // when the modal is opened autoplay it  
-    $('#myModal').on('shown.bs.modal', function (e) {
-        // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
-        console.log(URL_VIDEO_YOUTUBE + idVideoYoutube + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
-        $("#video").attr('src', URL_VIDEO_YOUTUBE + idVideoYoutube + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
-    })
-    // stop playing the youtube video when I close the modal
-    $('#myModal').on('hide.bs.modal', function (e) {
-        // a poor man's stop video
-        $("#video").attr('src', '');
-    })
-    // document ready  
-});
 
 carregarEventosAndInformacoesPadrao();

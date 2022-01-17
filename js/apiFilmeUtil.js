@@ -70,11 +70,11 @@ async function recuperarVideoYoutube(objetoApi){
 }
 
 // recupera o primeiro video com site igual a youtube 
-async function recuperarPrimeiroVideoYoutube(videos){
-    if (!videos || !videos.result || videos.result.length <= 0){
+function recuperarPrimeiroVideoYoutube(videos){
+    if (!videos || !videos.results || videos.results.length <= 0){
         return false;
-    }
-    for (v of videos.result){
+    }    
+    for (v of videos.results){
         if (v.site === "YouTube"){
             return v;
         }
@@ -95,7 +95,6 @@ async function recuperarEquipeFilmeApi(id){
 }
 
 
-//constructor(id, nome, nomeOriginal, caminhoImagem, personagem)
 // recupera os 10 primeiros atores e os diretores do filme
 async function recuperarAtoresPrincipaisAndDiretor(objetoApi){
     let mapEquipe = new Map();
