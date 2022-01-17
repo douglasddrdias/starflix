@@ -1,3 +1,7 @@
+const divContainerMaisInformacoes = document.getElementById('containerMaisInformacoes');
+const lblTituloMaisInformacoes = document.getElementById('mais-informacoes-titulo');
+const divCorpoMaisInformacoes = document.getElementById('corpoModalMaisInformacoes');
+
 // Adiciona um texto na tela
 function adicionarMensagemAoLabel(lblResultado, text) {
     let descricaoMensagem = document.createTextNode(text);
@@ -18,8 +22,12 @@ function limparFilhosElemento(lblResultado) {
 }
 
 // altera visibilidade dos botões de assistir e mais informações
-function alterarVisibilidadeBotao(btn) {
+function mostrarBotao(btn) {
     btn.classList.remove('botao-invisivel')
+}
+
+function esconderBotao(btn){
+    btn.classList.add('botao-invisivel')
 }
 
 // altera o backgrou com o filme selecionado
@@ -94,4 +102,75 @@ function criarElementoAndAdicionaTexto(tipoElemento, texto){
     let elemento = document.createElement(tipoElemento);
     adicionarMensagemAoLabel(elemento, texto);
     return elemento;
+}
+
+// cria uma linha de 3 colunas para titulo da informação e de 9 colunas para informação
+function criarLinhaTresPorNove(titulo, informacao){
+    let linha = criarLinhaBootStrap();
+    let lblTitulo = criarElementoAndAdicionaTexto('label', titulo);
+    lblTitulo.classList.add('col-lg-3');
+    let lblInformacao = criarElementoAndAdicionaTexto('label', informacao);
+    lblInformacao.classList.add('col-lg-9');
+    linha.appendChild(lblTitulo);
+    linha.appendChild(lblInformacao);
+    return linha;
+}
+
+// cria uma div com a class row usado no bootstrap
+function criarLinhaBootStrap() {
+    let linha = document.createElement('div');
+    linha.classList.add('row');
+    return linha;
+}
+
+// cria uma linha de 12 colunas para informação 
+function criarLinhaDozeColunasCentralizado(informacao){
+    let linha = criarLinhaBootStrap();
+    let lblInformacao = criarElementoAndAdicionaTexto('label', informacao);
+    lblInformacao.classList.add('col-lg-12');
+    lblInformacao.classList.add('text-center');
+    linha.appendChild(lblInformacao);
+    return linha;
+}
+
+// Carrega as informações de atores no owl
+function carregarAtoresOwl(mapEquipe) {
+    let linha = criarLinhaBootStrap();
+    let divOwl = document.createElement('div');
+    divOwl.classList.add('carrosel-filmes');
+    let divListaAtores = document.createElement('div');
+    divListaAtores.classList.add('owl-carousel')
+    divListaAtores.classList.add('owl-theme');    
+    let arrayAtores = mapEquipe.get('ator');
+    // limparFilhosElemento(divListaAtores);
+    divListaAtores.setAttribute('id', 'listaAtores');
+    for (ator of arrayAtores) {
+        carregarItemFilmesOwlAtor(ator, divListaAtores);
+    }
+    divOwl.appendChild(divListaAtores);
+    linha.appendChild(divOwl);
+    divContainerMaisInformacoes.appendChild(linha);
+    // Marretinha para recarregar o owl
+    // recarrega o owl carousel
+    // var owl = $("#listaAtores");
+    // owl.removeData("owl.carousel");
+    carregarOwlCarousel('#listaAtores');    
+}
+
+// Carrega os itens carousel de filme na tela
+function carregarItemFilmesOwlAtor(ator, div) {
+    if (!ator.caminhoImagem) {
+        return false;
+    } else {
+        let divItem = criarDivItemOwl();
+        let imagem = criarImgItemOwl(URL_FOTO + ator.caminhoImagem);
+        divItem.appendChild(imagem);
+        let divDetalhesAtor = criarDivItemOwlLegenda();
+        let h5 = criarElementoAndAdicionaTexto('h5', ator.nome);
+        let p = criarElementoAndAdicionaTexto('p', ator.personagem);
+        divDetalhesAtor.appendChild(h5);
+        divDetalhesAtor.appendChild(p);
+        divItem.appendChild(divDetalhesAtor);
+        div.appendChild(divItem);
+    }
 }

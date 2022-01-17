@@ -5,22 +5,13 @@ class Filme {
         this.idFilmeSwapi = idFilmeSwapi;
     }
 }
-// mais informações
-const lblTituloMaisInformacoes = document.getElementById('mais-informacoes-titulo');
-const lblTituloOriginal = document.getElementById('tituloOriginal');
+
 const btnMaisInformacoes = document.getElementById('mais-informacoes');
-const lblDataLancamento = document.getElementById('dataLancamento');
-const lblNotaFilme = document.getElementById('notaFilme');
-const divCorpoMaisInformacoes = document.getElementById('corpoModalMaisInformacoes');
-const divListaAtores = document.getElementById('listaAtores');
-const lblDiretor = document.getElementById('diretorFilme');
-// mais informações
-const lblDescricao = document.getElementById('descricao');
 const btnAssistir = document.getElementById('assistir');
 const imagens = document.querySelectorAll('img.box-filme');
 const divFilmePrincipal = document.querySelector('div.filme-principal');
-const lblTitulo = document.getElementById('titulo');
 const frameVideo = document.getElementById('video');
+const divCotainerFilme = document.getElementById('containerFilme');
 let objetoAtual;
 let arrayNomeImg;
 let nomeImg;
@@ -49,10 +40,11 @@ async function alterarFilmeDestaque(objetoApi) {
         objetoAtualApi = objetoApi;
         await alterarBackgroundComImagemApi(divFilmePrincipal);
         divFilmePrincipal.classList.add('filme-principal-responsivo');
-        divFilmePrincipal.style.height = '500px'
+        divFilmePrincipal.style.height = '500px';
+        limparFilhosElemento(divCotainerFilme);
         alterarTituloFilmeDestaque();
         alterarDescricaoFilmeDestaque();
-        alterarVisibilidadeBotoes();
+        mostrarBotooesFilme();
         // passar o focus
         sectionFilme.scrollIntoView();
     }
@@ -60,18 +52,36 @@ async function alterarFilmeDestaque(objetoApi) {
 
 // Altera o titulo do filme destaque
 function alterarTituloFilmeDestaque() {
-    adicionarMensagemAoLabel(lblTitulo, objetoAtualApi.title);
-    lblTitulo.classList.add("titulo")
+    let lblTitulo = criarElementoAndAdicionaTexto('h3', objetoAtualApi.title);
+    lblTitulo.classList.add("titulo");
+    divCotainerFilme.appendChild(lblTitulo);
 }
 
 // altera a descrição do filme destaque
 function alterarDescricaoFilmeDestaque() {
-    adicionarMensagemAoLabel(lblDescricao, objetoAtualApi.overview);
+    let lblDescricao = criarElementoAndAdicionaTexto('p', objetoAtualApi.overview);
+    lblDescricao.classList.add('descricao');
+    divCotainerFilme.appendChild(lblDescricao);
 }
+
+// limpa os itens do filme destaque
+function limparItensFilmeDestaque(){
+    divFilmePrincipal.style.height = '0px';
+    divFilmePrincipal.classList.remove('filme-principal-responsivo');
+    limparFilhosElemento(divCotainerFilme);
+    esconderBotoesFilme();
+}
+
 // altera visibilidade dos botões de assistir e mais informações
-function alterarVisibilidadeBotoes() {
-    alterarVisibilidadeBotao(btnAssistir);
-    alterarVisibilidadeBotao(btnMaisInformacoes);
+function mostrarBotooesFilme() {
+    mostrarBotao(btnAssistir);
+    mostrarBotao(btnMaisInformacoes);
+}
+
+// esconde os botões referente ao filme
+function esconderBotoesFilme(){
+    esconderBotao(btnAssistir)
+    esconderBotao(btnMaisInformacoes)
 }
 
 // carrega os eventos da página
@@ -83,7 +93,6 @@ async function carregarEventosAndInformacoesPadrao() {
         carregarItemFilmesOwlFilme(objetoApi, divListaFilmes);
     }
     carregarOwlCarousel('#listaFilmes');
-    carregarOwlCarousel('#listaAtores');
 }
 
 // Carrega os itens carousel de filme na tela
@@ -99,47 +108,23 @@ function carregarItemFilmesOwlFilme(objetoApi, div) {
 
 // Altera as informações do modal de mais informações
 async function recuperarMaisInformacoesFilme() {
+    limparFilhosElemento(divContainerMaisInformacoes);
     adicionarMensagemAoLabel(lblTituloMaisInformacoes, objetoAtualApi.title);
-    adicionarMensagemAoLabel(lblTituloOriginal, objetoAtualApi.original_title);
-    adicionarMensagemAoLabel(lblDataLancamento, formatarData(objetoAtualApi.release_date));
-    adicionarMensagemAoLabel(lblNotaFilme, objetoAtualApi.vote_average);
-    await alterarBackgroundComImagemApi(divCorpoMaisInformacoes);
+    let divTitulo = criarLinhaTresPorNove('Titulo original:', objetoAtualApi.original_title);    
+    divContainerMaisInformacoes.appendChild(divTitulo);
+    let divDataLancamento = criarLinhaTresPorNove('Data lançamento:', formatarData(objetoAtualApi.release_date));
+    divContainerMaisInformacoes.appendChild(divDataLancamento);
+    let divNotaFilme = criarLinhaTresPorNove('Nota do filme:', objetoAtualApi.vote_average);
+    divContainerMaisInformacoes.appendChild(divNotaFilme);
     let mapEquipe = await recuperarAtoresPrincipaisAndDiretor(objetoAtualApi);
-    carregarAtoresOwl(mapEquipe);
     let diretor = mapEquipe.get('diretor')[0];
-    adicionarMensagemAoLabel(lblDiretor, diretor.nome);
-}
-
-// Carrega as informações de atores no owl
-function carregarAtoresOwl(mapEquipe) {
-    let arrayAtores = mapEquipe.get('ator');
-    limparFilhosElemento(divListaAtores);
-    for (ator of arrayAtores) {
-        carregarItemFilmesOwlAtor(ator, divListaAtores);
-    }
-
-    // recarrega o owl carousel
-    var owl = $("#listaAtores");
-    owl.removeData("owl.carousel");
-    carregarOwlCarousel('#listaAtores');    
-}
-
-// Carrega os itens carousel de filme na tela
-function carregarItemFilmesOwlAtor(ator, div) {
-    if (!ator.caminhoImagem) {
-        return false;
-    } else {
-        let divItem = criarDivItemOwl();
-        let imagem = criarImgItemOwl(URL_FOTO + ator.caminhoImagem);
-        divItem.appendChild(imagem);
-        let divDetalhesAtor = criarDivItemOwlLegenda();
-        let h5 = criarElementoAndAdicionaTexto('h5', ator.nome);
-        let p = criarElementoAndAdicionaTexto('p', ator.personagem);
-        divDetalhesAtor.appendChild(h5);
-        divDetalhesAtor.appendChild(p);
-        divItem.appendChild(divDetalhesAtor);
-        div.appendChild(divItem);
-    }
+    let divDiretor = criarLinhaTresPorNove('Diretor:', diretor.nome);
+    divContainerMaisInformacoes.appendChild(divDiretor);
+    let divTituloElencoPrincipal = criarLinhaDozeColunasCentralizado('Elenco principal');
+    divTituloElencoPrincipal.classList.add('margin-em-cima')
+    divContainerMaisInformacoes.appendChild(divTituloElencoPrincipal);
+    await alterarBackgroundComImagemApi(divCorpoMaisInformacoes);
+    carregarAtoresOwl(mapEquipe);
 }
 
 // altera o background do filme com imagem da api

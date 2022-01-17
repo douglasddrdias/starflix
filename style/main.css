@@ -97,10 +97,13 @@ header nav a:hover {
     margin-right: 8px;
 }
 
-.meu-container {
-    margin-left: 30px;
+.meu-container {    
     font-family: StarWars, StarWarsAlt, 'Arial', Times, serif;
     color: white;    
+}
+
+.margem-direita {
+    margin-left: 30px;
 }
 
 .filme-principal .meu-container {
@@ -168,4 +171,8 @@ header nav a:hover {
 
 .detalhes-diretor {
     margin-bottom: 60px;
+}
+
+.margin-em-cima {
+    margin-top: 20px;
 }

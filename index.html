@@ -25,25 +25,23 @@
                 <a href="#filmePrincipal">Início</a>
                 <a href="#">Séries</a>
                 <a href="#filmePrincipal">Filmes</a>
-                <a href="#">Documentários</a>
+                <a href="#" onclick="limparItensFilmeDestaque()">Documentários</a>
             </nav>
         </div>
     </header>
     <main>
         <section id="filmePrincipal">
             <div class="filme-principal">
-                <div class="meu-container">
-                    <h3 id="titulo"></h3>
-                    <p class="descricao" id="descricao"></p>
-                    <div class="botoes">
-                        <button role="button" id="assistir" class="botao botao-invisivel" type="button"
-                            data-bs-toggle="modal" data-bs-target="#myModal"><i class="fas fa-play"></i>ASSISTIR
-                            AGORA</button>
-                        <button role="button" id="mais-informacoes" class="botao botao-invisivel" data-bs-toggle="modal"
-                            data-bs-target="#maisInformaocesModal"><i class="fas fa-info-circle"></i>MAIS
-                            INFORMAÇÕES</button>
-                    </div>
+                <div class="meu-container margem-direita" id="containerFilme">
                 </div>
+                <div class="botoes margem-direita">
+                    <button role="button" id="assistir" class="botao botao-invisivel" type="button"
+                        data-bs-toggle="modal" data-bs-target="#myModal"><i class="fas fa-play"></i>ASSISTIR
+                        AGORA</button>
+                    <button role="button" id="mais-informacoes" class="botao botao-invisivel" data-bs-toggle="modal"
+                        data-bs-target="#maisInformaocesModal"><i class="fas fa-info-circle"></i>MAIS
+                        INFORMAÇÕES</button>
+                </div>                
             </div>
         </section>
     </main>
@@ -82,23 +80,22 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="container">
+                    <div class="container" id="containerMaisInformacoes">
                         <div class="row">
                             <label class="col-lg-3">Titulo original:</label>
                             <label id="tituloOriginal" class="col-lg-9"></label>
                         </div>
                         <div class="row">
-                            <label class="col-lg-3 mais-informacoes-lbl-titulo">Data lançamento:</label>
+                            <label class="col-lg-3 ">Data lançamento:</label>
                             <label id="dataLancamento" class="col-lg-9"></label>
                         </div>
                         <div class="row">
-                            <label class="col-lg-3 mais-informacoes-lbl-titulo">Nota do filme:</label>
+                            <label class="col-lg-3 ">Nota do filme:</label>
                             <label id="notaFilme" class="col-lg-9"></label>
                         </div>
                         <div class="row">
-                            <label class="col-lg-3 mais-informacoes-lbl-titulo">Diretor:</label>
-                            <!-- <div id="diretorFilme" class="col-lg-9"></div> -->
-                            <label class="col-lg-9 detalhes-diretor" id="diretorFilme"></label>
+                            <label class="col-lg-3 ">Diretor:</label>
+                            <label class="col-lg-9 " id="diretorFilme"></label>
                         </div>                        
                         <div class="row">
                             <label class="col-lg-12 text-center">Elenco principal</label>
