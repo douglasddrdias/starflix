@@ -36,6 +36,7 @@ function carregarOwlCarousel(id) {
         margin: 10,
         responsiveClass: true,
         nav: false,
+        caption: true,
         responsive: {
             0: {
                 items: 1
@@ -65,6 +66,15 @@ function criarDivItemOwl() {
     return divItem;
 }
 
+// cria uma div para legenda do owl carousel
+function criarDivItemOwlLegenda(){
+    let divItem = document.createElement('div');
+    divItem.classList.add('image-caption');
+    divItem.classList.add('d-none');
+    divItem.classList.add('d-md-block');
+    return divItem
+}
+
 // Formata a data para o formato pt-br
 function formatarData(dataParaFormatar) {
     if (!dataParaFormatar) {
@@ -77,4 +87,11 @@ function formatarData(dataParaFormatar) {
 // gera um número inteiro aleatorio até o valor máximo
 function getNumeroAleatorio(max) {
     return Math.floor(Math.random() * max + 1)
+}
+
+// cria um elemento com o tipo passado por parâmetro e adiciona a mensagem ao mesmo
+function criarElementoAndAdicionaTexto(tipoElemento, texto){
+    let elemento = document.createElement(tipoElemento);
+    adicionarMensagemAoLabel(elemento, texto);
+    return elemento;
 }

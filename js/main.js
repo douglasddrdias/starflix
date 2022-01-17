@@ -12,6 +12,8 @@ const btnMaisInformacoes = document.getElementById('mais-informacoes');
 const lblDataLancamento = document.getElementById('dataLancamento');
 const lblNotaFilme = document.getElementById('notaFilme');
 const divCorpoMaisInformacoes = document.getElementById('corpoModalMaisInformacoes');
+const divListaAtores = document.getElementById('listaAtores');
+const lblDiretor = document.getElementById('diretorFilme');
 // mais informações
 const lblDescricao = document.getElementById('descricao');
 const btnAssistir = document.getElementById('assistir');
@@ -26,7 +28,7 @@ let objetoAtualApi;
 const URL_VIDEO_YOUTUBE = 'https://www.youtube.com/embed/';
 let idVideoYoutube;
 const divListaFilmes = document.getElementById('listaFilmes');
-const divListaAtores = document.getElementById('listaAtores');
+const sectionFilme = document.getElementById('filmePrincipal');
 const arrayFilmes = [new Filme('jVrf_bKTjo4', '11'),
 new Filme('bD7bpG-zDJQ', '1893'),
 new Filme('-di3XYRxyHY', '181808'),
@@ -51,6 +53,8 @@ async function alterarFilmeDestaque(objetoApi) {
         alterarTituloFilmeDestaque();
         alterarDescricaoFilmeDestaque();
         alterarVisibilidadeBotoes();
+        // passar o focus
+        sectionFilme.scrollIntoView();
     }
 }
 
@@ -101,29 +105,39 @@ async function recuperarMaisInformacoesFilme() {
     adicionarMensagemAoLabel(lblNotaFilme, objetoAtualApi.vote_average);
     await alterarBackgroundComImagemApi(divCorpoMaisInformacoes);
     let mapEquipe = await recuperarAtoresPrincipaisAndDiretor(objetoAtualApi);
+    carregarAtoresOwl(mapEquipe);
+    let diretor = mapEquipe.get('diretor')[0];
+    adicionarMensagemAoLabel(lblDiretor, diretor.nome);
+}
+
+// Carrega as informações de atores no owl
+function carregarAtoresOwl(mapEquipe) {
     let arrayAtores = mapEquipe.get('ator');
     limparFilhosElemento(divListaAtores);
     for (ator of arrayAtores) {
-        carregarItemFilmesOwl(ator, divListaAtores);
+        carregarItemFilmesOwlAtor(ator, divListaAtores);
     }
 
     // recarrega o owl carousel
-    var owl = $("#listaAtores"); 
+    var owl = $("#listaAtores");
     owl.removeData("owl.carousel");
-    carregarOwlCarousel('#listaAtores');
-
+    carregarOwlCarousel('#listaAtores');    
 }
 
-
-
 // Carrega os itens carousel de filme na tela
-function carregarItemFilmesOwl(ator, div) {
+function carregarItemFilmesOwlAtor(ator, div) {
     if (!ator.caminhoImagem) {
         return false;
     } else {
         let divItem = criarDivItemOwl();
         let imagem = criarImgItemOwl(URL_FOTO + ator.caminhoImagem);
         divItem.appendChild(imagem);
+        let divDetalhesAtor = criarDivItemOwlLegenda();
+        let h5 = criarElementoAndAdicionaTexto('h5', ator.nome);
+        let p = criarElementoAndAdicionaTexto('p', ator.personagem);
+        divDetalhesAtor.appendChild(h5);
+        divDetalhesAtor.appendChild(p);
+        divItem.appendChild(divDetalhesAtor);
         div.appendChild(divItem);
     }
 }

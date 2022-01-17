@@ -161,3 +161,11 @@ header nav a:hover {
     background: var(--preto);
     padding-bottom: 50px;
 }
+
+.image-caption h5 {
+    color: darkorange;
+}
+
+.detalhes-diretor {
+    margin-bottom: 60px;
+}
